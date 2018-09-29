@@ -1,8 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BooksGrid from './BooksGrid';
 
 class SearchBooks extends React.Component {
+  state = {
+    query: ''
+  };
+
+  updateQuery = q => {
+    this.setState(() => ({ query: q }));
+  };
+
   render() {
+    const queriedBooks = this.state.query === ''
+      ? []
+      : this.props.books.filter(b => (
+        b.author.toLowerCase().includes(this.state.query.toLowerCase())
+        || b.title.toLowerCase().includes(this.state.query.toLowerCase())
+      ));
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -16,12 +32,19 @@ class SearchBooks extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-            <input type="text" placeholder="Search by title or author" />
-
+            <input
+              type="text"
+              placeholder="Search by title or author"
+              value={this.state.query}
+              onChange={e => this.updateQuery(e.target.value)}
+            />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <BooksGrid
+            books={queriedBooks}
+            move={this.props.move}
+          />
         </div>
       </div>
     );
