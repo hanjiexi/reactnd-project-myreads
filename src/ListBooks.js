@@ -57,6 +57,26 @@ const BOOKS = [
 ];
 
 class ListBooks extends React.Component {
+  state = {
+    books: [...BOOKS]
+  };
+
+  moveBook = (book, newShelf) => {
+    const updatedBook = {
+      cover: book.cover,
+      title: book.title,
+      author: book.author,
+      shelf: newShelf,
+      id: book.id
+    };
+
+    this.setState(prevState => ({
+      books: prevState.books.map(b => {
+        b.id === book.id ? updatedBook : b
+      })
+    }));
+  };
+
   render() {
     return (
       <div className="list-books">
@@ -66,7 +86,12 @@ class ListBooks extends React.Component {
         <div className="list-books-content">
           <div>
             {SHELVES.map(s => (
-              <Shelf shelf={s} books={BOOKS.filter(b => b.shelf === s)} />
+              <Shelf
+                shelves={SHELVES}
+                shelf={s}
+                books={BOOKS.filter(b => b.shelf === s)}
+                move={this.moveBook}
+              />
             ))}
           </div>
         </div>

@@ -6,7 +6,11 @@ function Book(props) {
     <div className="book">
       <div className="book-top">
         <div className="book-cover" style={props.book.cover}></div>
-        <SelectShelf />
+        <SelectShelf
+          shelves={props.shelves}
+          move={props.move}
+          shelfName={props.shelfName}
+        />
       </div>
       <div className="book-title">{props.book.title}</div>
       <div className="book-authors">{props.book.author}</div>
