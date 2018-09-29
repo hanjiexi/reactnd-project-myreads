@@ -1,8 +1,7 @@
 import React from 'react';
 import Shelf from './Shelf';
 import { Link } from 'react-router-dom';
-
-const SHELVES = ["currentlyReading", "wantToRead", "read"];
+import Shelves from './Shelves';
 
 const BOOKS = [
   {
@@ -83,9 +82,8 @@ class ListBooks extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            {SHELVES.map(s => (
+            {Shelves.t.map(s => (
               <Shelf
-                shelves={SHELVES}
                 shelf={s}
                 books={this.state.books.filter(b => b.shelf === s)}
                 move={this.moveBook}

@@ -7,10 +7,8 @@ function Book(props) {
       <div className="book-top">
         <div className="book-cover" style={props.book.cover}></div>
         <SelectShelf
-          shelves={props.shelves}
           move={props.move}
-          shelfName={props.shelfName}
-          currentShelf={props.book.shelf}
+          shelf={props.book.shelf}
           book={props.book}
         />
       </div>
