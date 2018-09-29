@@ -3,10 +3,12 @@ import React from 'react';
 function SelectShelf(props) {
   return (
     <div className="book-shelf-changer">
-      <select>
+      <select onChange={e => props.move(props.book, e.target.value)}>
         <option value="move" disabled>Move to...</option>
         {props.shelves.map(s => (
-          <option value={s}>{props.shelfName(s)}</option>
+          props.currentShelf === s
+          ? <option selected key={s} value={s}>{props.shelfName(s)}</option>
+          : <option key={s} value={s}>{props.shelfName(s)}</option>
         ))}
         <option value="none">None</option>
       </select>

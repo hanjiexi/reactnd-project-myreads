@@ -10,6 +10,8 @@ function Book(props) {
           shelves={props.shelves}
           move={props.move}
           shelfName={props.shelfName}
+          currentShelf={props.book.shelf}
+          book={props.book}
         />
       </div>
       <div className="book-title">{props.book.title}</div>

@@ -6,7 +6,7 @@ const shelfName = (s) => {
     case "currentlyReading": return "Currently Reading";
     case "wantToRead": return "Want to Read";
     case "read": return "Read";
-    default: return "Error";
+    default: return "None";
   }
 }
 

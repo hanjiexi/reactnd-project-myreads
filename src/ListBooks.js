@@ -71,9 +71,7 @@ class ListBooks extends React.Component {
     };
 
     this.setState(prevState => ({
-      books: prevState.books.map(b => {
-        b.id === book.id ? updatedBook : b
-      })
+      books: prevState.books.map(b => b.id === book.id ? updatedBook : b)
     }));
   };
 
@@ -89,7 +87,7 @@ class ListBooks extends React.Component {
               <Shelf
                 shelves={SHELVES}
                 shelf={s}
-                books={BOOKS.filter(b => b.shelf === s)}
+                books={this.state.books.filter(b => b.shelf === s)}
                 move={this.moveBook}
               />
             ))}
