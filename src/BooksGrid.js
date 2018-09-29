@@ -3,7 +3,6 @@ import Book from './Book';
 
 function BooksGrid(props) {
   return (
-    <div className="bookshelf-books">
       <ol className="books-grid">
         {props.books.map(b => (
           <li key="book-{b.id}">
@@ -16,7 +15,6 @@ function BooksGrid(props) {
           </li>
         ))}
       </ol>
-    </div>
   );
 }
 

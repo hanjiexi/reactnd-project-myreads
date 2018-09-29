@@ -15,12 +15,14 @@ class Shelf extends React.Component {
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{shelfName(this.props.shelf)}</h2>
-        <BooksGrid
-          shelves={this.props.shelves}
-          books={this.props.books}
-          move={this.props.move}
-          shelfName={shelfName}
-        />
+        <div className="bookshelf-books">
+          <BooksGrid
+            shelves={this.props.shelves}
+            books={this.props.books}
+            move={this.props.move}
+            shelfName={shelfName}
+          />
+        </div>
       </div>
     );
   }
