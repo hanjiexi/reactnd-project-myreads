@@ -5,19 +5,23 @@ import SearchBooks from './SearchBooks';
 import ListBooks from './ListBooks';
 import { Route } from 'react-router-dom';
 
-const formatBooks = books => (
-  books.map(b => ({
-    cover: {
-      width: 128,
-      height: 170,
-      backgroundImage: `url(${b.imageLinks.smallThumbnail})`
-    },
-    author: b.authors[0],
-    title: b.title,
-    shelf: b.shelf,
-    id: b.id
-  }))
-);
+const formatBooks = books => {
+  return Object.values(books)
+    .filter(b => b.hasOwnProperty('title'))
+    .map(b => {
+      return {
+        cover: {
+          width: 128,
+          height: 170,
+          backgroundImage: b.hasOwnProperty('imageLinks') ? `url(${b.imageLinks.thumbnail})` : "url(..images/blank.png)"
+        },
+        author: b.hasOwnProperty('authors') ? b.authors[0] : (b.hasOwnProperty('author') ? b.author : ""),
+        title: b.title,
+        shelf: b.hasOwnProperty('shelf') ? b.shelf : "none",
+        id: b.id
+      }
+    })
+};
 
 class BooksApp extends React.Component {
   state = {
@@ -44,9 +48,11 @@ class BooksApp extends React.Component {
 
     BooksAPI.update({ id: updatedBook.id }, newShelf)
       .then(post => {
-        this.setState(prevState => ({
-          books: prevState.books.map(b => b.id === book.id ? updatedBook : b)
-        }));
+        this.setState(prevState => (
+          prevState.books.find(b => b.id === book.id)
+            ? { books: prevState.books.map(b => b.id === book.id ? updatedBook : b) }
+            : { books: [updatedBook, ...prevState.books] }
+        ));
       });
   };
 
@@ -57,7 +63,7 @@ class BooksApp extends React.Component {
           <ListBooks books={this.state.books} move={this.moveBook} />
         )} />
         <Route path='/search' render={() => (
-          <SearchBooks books={this.state.books} move={this.moveBook} />
+          <SearchBooks books={this.state.books} move={this.moveBook} format={formatBooks} />
         )} />
       </div>
     );
