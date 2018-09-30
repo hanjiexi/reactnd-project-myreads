@@ -43,13 +43,7 @@ class BooksApp extends React.Component {
   };
 
   moveBook = (book, newShelf) => {
-    const updatedBook = {
-      cover: book.cover,
-      title: book.title,
-      author: book.author,
-      shelf: newShelf,
-      id: book.id
-    };
+    const updatedBook = Object.assign({}, book, {shelf: newShelf});
 
     BooksAPI.update({ id: updatedBook.id }, newShelf)
       .then(post => {
