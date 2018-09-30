@@ -17,6 +17,7 @@ function ListBooks(props) {
                 shelf={s}
                 books={props.books.filter(b => b.shelf === s)}
                 move={props.move}
+                key={s}
               />)
           ))}
         </div>
