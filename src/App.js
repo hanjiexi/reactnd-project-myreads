@@ -5,24 +5,6 @@ import SearchBooks from './SearchBooks';
 import ListBooks from './ListBooks';
 import { Route } from 'react-router-dom';
 
-const formatBooks = books => {
-  return Object.values(books)
-    .filter(b => b.hasOwnProperty('title'))
-    .map(b => {
-      return {
-        cover: {
-          width: 128,
-          height: 170,
-          backgroundImage: b.hasOwnProperty('imageLinks') ? `url(${b.imageLinks.thumbnail})` : "url(..images/blank.png)"
-        },
-        author: b.hasOwnProperty('authors') ? b.authors[0] : (b.hasOwnProperty('author') ? b.author : ""),
-        title: b.title,
-        shelf: b.hasOwnProperty('shelf') ? b.shelf : "none",
-        id: b.id
-      }
-    })
-};
-
 class BooksApp extends React.Component {
   state = {
     books: [],
@@ -32,10 +14,33 @@ class BooksApp extends React.Component {
     BooksAPI.getAll()
       .then(books => {
         this.setState(() => ({
-          books: formatBooks(books)
+          books: this.formatBooks(books)
         }))
       })
   }
+
+  getShelf = id => {
+    const book = this.state.books.find(b => b.id === id);
+    return book ? book.shelf : "none";
+  };
+
+  formatBooks = books => {
+    return Object.values(books)
+      .filter(b => b.hasOwnProperty('title'))
+      .map(b => {
+        return {
+          cover: {
+            width: 128,
+            height: 170,
+            backgroundImage: b.hasOwnProperty('imageLinks') ? `url(${b.imageLinks.thumbnail})` : "url(..images/blank.png)"
+          },
+          author: b.hasOwnProperty('authors') ? b.authors[0] : (b.hasOwnProperty('author') ? b.author : ""),
+          title: b.title,
+          shelf: b.hasOwnProperty('shelf') ? b.shelf : this.getShelf(b.id),
+          id: b.id
+        }
+      })
+  };
 
   moveBook = (book, newShelf) => {
     const updatedBook = {
@@ -63,7 +68,7 @@ class BooksApp extends React.Component {
           <ListBooks books={this.state.books} move={this.moveBook} />
         )} />
         <Route path='/search' render={() => (
-          <SearchBooks books={this.state.books} move={this.moveBook} format={formatBooks} />
+          <SearchBooks books={this.state.books} move={this.moveBook} format={this.formatBooks} />
         )} />
       </div>
     );
