@@ -2,6 +2,7 @@ import React from 'react';
 import * as BooksAPI from './BooksAPI';
 import { Link } from 'react-router-dom';
 import BooksGrid from './BooksGrid';
+import {DebounceInput} from 'react-debounce-input';
 
 class SearchBooks extends React.Component {
   state = {
@@ -32,7 +33,9 @@ class SearchBooks extends React.Component {
         <div className="search-books-bar">
           <Link className="close-search" to='/'>Close</Link>
           <div className="search-books-input-wrapper">
-            <input
+            <DebounceInput
+              minLength={2}
+              debounceTimeout={300}
               type="text"
               placeholder="Search by title or author"
               value={this.state.query}
