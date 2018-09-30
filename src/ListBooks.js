@@ -12,11 +12,12 @@ function ListBooks(props) {
       <div className="list-books-content">
         <div>
           {Shelves.t.map(s => (
-            <Shelf
-              shelf={s}
-              books={props.books.filter(b => b.shelf === s)}
-              move={props.move}
-            />
+            s !== "none" && (
+              <Shelf
+                shelf={s}
+                books={props.books.filter(b => b.shelf === s)}
+                move={props.move}
+              />)
           ))}
         </div>
       </div>

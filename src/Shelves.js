@@ -1,4 +1,4 @@
-const shelfIDs = ["currentlyReading", "wantToRead", "read"];
+const shelfIDs = ["currentlyReading", "wantToRead", "read", "none"];
 
 const name = (s) => {
   switch (s) {
