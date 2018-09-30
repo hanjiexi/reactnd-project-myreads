@@ -10,7 +10,7 @@ function SelectShelf(props) {
       >
         <option value="move" disabled>Move to...</option>
         {Shelves.t.map(s => (
-          <option key={props.book.id} value={s}>{Shelves.idToName(s)}</option>
+          <option key={s} value={s}>{Shelves.idToName(s)}</option>
         ))}
       </select>
     </div>
