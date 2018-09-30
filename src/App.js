@@ -42,9 +42,12 @@ class BooksApp extends React.Component {
       id: book.id
     };
 
-    this.setState(prevState => ({
-      books: prevState.books.map(b => b.id === book.id ? updatedBook : b)
-    }));
+    BooksAPI.update({ id: updatedBook.id }, newShelf)
+      .then(post => {
+        this.setState(prevState => ({
+          books: prevState.books.map(b => b.id === book.id ? updatedBook : b)
+        }));
+      });
   };
 
   render() {
